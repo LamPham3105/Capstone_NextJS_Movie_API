@@ -16,15 +16,15 @@ export class QuanLyRapController {
   @ApiQuery({ name: 'maHeThongRap', required: false, type: String })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Get list he thong rap successfully',
+    description: 'Successfully retrieved the list of theater systems',
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: 'Not found he thong rap',
+    description: 'Theater system not found',
   })
   @ApiResponse({
     status: HttpStatus.INTERNAL_SERVER_ERROR,
-    description: 'Internal server',
+    description: 'Internal server error',
   })
   async findLayThongTinHeThongRap(
     @Query('maHeThongRap') maHeThongRap: string,
@@ -37,7 +37,7 @@ export class QuanLyRapController {
       if (heThongRaps.length == 0) {
         return res.status(HttpStatus.NOT_FOUND).json({
           statusCode: HttpStatus.NOT_FOUND,
-          message: 'Not found he thong rap',
+          message: 'Theater system not found',
           content: heThongRaps,
           dateTime: new Date(Date.now()),
         });
@@ -45,7 +45,7 @@ export class QuanLyRapController {
 
       return res.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
-        message: 'Get list he thong rap successfully',
+        message: 'Successfully retrieved the list of theater systems',
         content: heThongRaps,
         dateTime: new Date(Date.now()),
       });
@@ -86,7 +86,7 @@ export class QuanLyRapController {
       if (cumRapHeThongRaps.length == 0) {
         return res.status(HttpStatus.NOT_FOUND).json({
           statusCode: HttpStatus.NOT_FOUND,
-          message: 'Not found he thong rap',
+          message: 'Cinema system not found',
           content: cumRapHeThongRaps,
           dateTime: new Date(Date.now()),
         });
@@ -136,7 +136,7 @@ export class QuanLyRapController {
       if (!results || results.length === 0) {
         return res.status(HttpStatus.NOT_FOUND).json({
           statusCode: HttpStatus.NOT_FOUND,
-          message: 'Not found he thong rap',
+          mmessage: 'Cinema system not found',
           content: [],
           dateTime: new Date(),
         });
@@ -152,7 +152,7 @@ export class QuanLyRapController {
     } catch (error) {
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
         statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-        message: 'Internal server error: ' + error.message,
+        message: error.message,
         content: error.stack,
         dateTime: new Date(),
       });
@@ -168,7 +168,7 @@ export class QuanLyRapController {
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: 'Cinema system not found.',
+    description: 'Movie not found.',
   })
   @ApiResponse({
     status: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -185,7 +185,7 @@ export class QuanLyRapController {
       if (!result) {
         return res.status(HttpStatus.NOT_FOUND).json({
           statusCode: HttpStatus.NOT_FOUND,
-          message: 'Not found he thong rap',
+          message: 'Movie not found',
           content: [],
           dateTime: new Date(),
         });

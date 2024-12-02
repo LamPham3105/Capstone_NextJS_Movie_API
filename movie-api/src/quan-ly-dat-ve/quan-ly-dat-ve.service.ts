@@ -9,7 +9,6 @@ import { format } from 'date-fns';
 import { plainToClass } from 'class-transformer';
 import { DatVeDto } from './dto/DatVe.dto';
 import { LichChieuDto } from './dto/LichChieu.dto';
-import { Decimal } from '@prisma/client/runtime/library';
 
 @Injectable()
 export class QuanLyDatVeService {
@@ -75,7 +74,7 @@ export class QuanLyDatVeService {
       };
 
       return plainToClass(LichChieuResponseDTO, response, {
-        excludeExtraneousValues: true, // Ensures only `@Expose` properties are returned
+        excludeExtraneousValues: true,
       });
     } catch (error) {
       throw new Error(error);
@@ -95,9 +94,7 @@ export class QuanLyDatVeService {
         });
 
         if (!lichChieu) {
-          throw new BadRequestException(
-            `Lịch chiếu không hợp lệ: ${maLichChieu}`,
-          );
+          throw new BadRequestException(`Invalid showtime: ${maLichChieu}`);
         }
 
         const maRapFromLichChieu = lichChieu.ma_rap;
@@ -110,12 +107,12 @@ export class QuanLyDatVeService {
           });
 
           if (!ghe) {
-            throw new BadRequestException(`Ghế không hợp lệ: ${maGhe}`);
+            throw new BadRequestException(`Invalid seat: ${maGhe}`);
           }
 
           if (ghe.ma_rap !== maRapFromLichChieu) {
             throw new BadRequestException(
-              `Ghế ${maGhe} không thuộc rạp của lịch chiếu: ${maRapFromLichChieu}`,
+              `Seat ${maGhe} does not belong to the cinema of the showtime: ${maRapFromLichChieu}`,
             );
           }
 
@@ -124,7 +121,7 @@ export class QuanLyDatVeService {
           });
 
           if (alreadyBooked) {
-            throw new BadRequestException(`Ghế ${maGhe} đã được đặt!`);
+            throw new BadRequestException(`Seat ${maGhe} is already booked!`);
           }
         }
 
@@ -147,14 +144,14 @@ export class QuanLyDatVeService {
 
         results.push({
           maLichChieu,
-          message: 'Đặt vé thành công!',
+          message: 'Tickets booked successfully!',
           tongTien,
         });
       } catch (error) {
         if (error instanceof BadRequestException) {
           results.push({
             maLichChieu,
-            message: `Lỗi: ${error.message}`,
+            message: `Error: ${error.message}`,
           });
         } else {
           throw new InternalServerErrorException(
@@ -173,7 +170,9 @@ export class QuanLyDatVeService {
     try {
       const giaVeNumber = parseFloat(giaVe);
       if (isNaN(giaVeNumber) || giaVeNumber < 75000 || giaVeNumber > 200000) {
-        throw new BadRequestException('Giá vé phải từ 75,000 đến 200,000');
+        throw new BadRequestException(
+          'Ticket price must be between 75,000 and 200,000',
+        );
       }
 
       const phim = await this.prisma.phim.findUnique({
@@ -205,7 +204,7 @@ export class QuanLyDatVeService {
         },
       });
       if (existingLichChieu) {
-        throw new BadRequestException('Lịch chiếu đã tồn tại!');
+        throw new BadRequestException('Showtime already exists!');
       }
 
       const createdLichChieu = await this.prisma.lichChieu.create({
@@ -220,9 +219,7 @@ export class QuanLyDatVeService {
 
       return plainToClass(LichChieuDto, createdLichChieu);
     } catch (error) {
-      throw new BadRequestException(
-        error.message || 'Error creating LichChieu',
-      );
+      throw new BadRequestException(error.message || 'Error creating Showtime');
     }
   }
 }

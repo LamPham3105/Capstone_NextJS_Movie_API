@@ -55,7 +55,7 @@ export class QuanLyRapService {
         },
       });
 
-      return heThongRap.CumRap.map((cumRap) =>
+      return heThongRap?.CumRap.map((cumRap) =>
         plainToClass(CumRapDto, {
           maCumRap: cumRap.ma_cum_rap,
           tenCumRap: cumRap.ten_cum_rap,
@@ -192,7 +192,6 @@ export class QuanLyRapService {
           );
 
           if (!heThongRap) {
-            // If the maHeThongRap doesn't exist, create a new one
             heThongRap = {
               maHeThongRap: ma_he_thong_rap,
               tenHeThongRap: ten_he_thong_rap,
@@ -202,14 +201,12 @@ export class QuanLyRapService {
             acc.push(heThongRap);
           }
 
-          // Process cumRapChieu
           const cumRap = lichChieu.RapPhim.CumRap;
           const existingCumRap = heThongRap.cumRapChieu.find(
             (item) => item.maCumRap === cumRap.ma_cum_rap,
           );
 
           if (!existingCumRap) {
-            // If the maCumRap doesn't exist, create a new one
             const newCumRap = {
               maCumRap: cumRap.ma_cum_rap,
               tenCumRap: cumRap.ten_cum_rap,
@@ -219,7 +216,6 @@ export class QuanLyRapService {
             heThongRap.cumRapChieu.push(newCumRap);
           }
 
-          // Now add the lichChieuPhim for the corresponding cumRapChieu
           const lichChieuPhim = {
             maLichChieu: lichChieu.ma_lich_chieu.toString(),
             maRap: lichChieu.ma_rap.toString(),
@@ -228,7 +224,6 @@ export class QuanLyRapService {
             giaVe: Number(lichChieu.gia_ve),
           };
 
-          // Find the cumRapChieu to add the lichChieuPhim
           const cumRapToUpdate = heThongRap.cumRapChieu.find(
             (item) => item.maCumRap === cumRap.ma_cum_rap,
           );

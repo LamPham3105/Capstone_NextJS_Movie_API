@@ -140,18 +140,25 @@ export class QuanLyPhimService {
 
   async createPhim(createPhimDto: CreatePhimDto): Promise<CreatePhimDto> {
     try {
+      const ngayKhoiChieu = new Date(createPhimDto.ngayKhoiChieu);
+      if (isNaN(ngayKhoiChieu.getTime())) {
+        throw new Error('Invalid date format for ngayKhoiChieu');
+      }
+
+      const countPhim = await this.prisma.phim.count();
+
       const movie = await this.prisma.phim.create({
         data: {
-          ma_phim: '',
+          ma_phim: 'P' + (countPhim + 1),
           ten_phim: createPhimDto.tenPhim,
           trailer: createPhimDto.trailer,
           hinh_anh: createPhimDto.hinhAnh,
           mo_ta: createPhimDto.moTa,
-          ngay_khoi_chieu: new Date(createPhimDto.ngayKhoiChieu),
-          danh_gia: createPhimDto.danhGia,
-          hot: createPhimDto.hot,
-          dang_chieu: createPhimDto.dangChieu,
-          sap_chieu: createPhimDto.sapChieu,
+          ngay_khoi_chieu: ngayKhoiChieu,
+          danh_gia: Number(createPhimDto.danhGia) ?? 0,
+          hot: Boolean(createPhimDto.hot),
+          dang_chieu: Boolean(createPhimDto.dangChieu),
+          sap_chieu: Boolean(createPhimDto.sapChieu),
         },
       });
 
@@ -160,7 +167,6 @@ export class QuanLyPhimService {
       throw new BadRequestException('Error creating movie: ' + error.message);
     }
   }
-
   async deletePhim(maPhim: string): Promise<void> {
     try {
       const phim = await this.prisma.phim.findFirst({
@@ -173,7 +179,6 @@ export class QuanLyPhimService {
         );
       }
 
-      // Delete the movie
       await this.prisma.phim.deleteMany({ where: { ma_phim: maPhim } });
     } catch (error) {
       throw error;

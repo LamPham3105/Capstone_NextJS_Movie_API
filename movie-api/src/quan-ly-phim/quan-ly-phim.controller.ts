@@ -44,7 +44,7 @@ export class QuanLyPhimController {
   })
   @ApiResponse({
     status: HttpStatus.INTERNAL_SERVER_ERROR,
-    description: 'Internal server',
+    description: 'Internal server error',
   })
   async findLayDanhSachBanner(
     @Res() res: Response,
@@ -81,7 +81,7 @@ export class QuanLyPhimController {
   @ApiQuery({ name: 'tenPhim', required: false, type: String })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Get list film successfully',
+    description: 'Get list of films successfully',
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
@@ -89,7 +89,7 @@ export class QuanLyPhimController {
   })
   @ApiResponse({
     status: HttpStatus.INTERNAL_SERVER_ERROR,
-    description: 'Internal server',
+    description: 'Internal server error',
   })
   async findLayDanhSachPhim(
     @Query('tenPhim') tenPhim: string,
@@ -109,7 +109,7 @@ export class QuanLyPhimController {
 
       return res.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
-        message: 'Get list film successfully',
+        message: 'Get list of films successfully',
         content: results,
         dateTime: new Date(Date.now()),
       });
@@ -129,7 +129,7 @@ export class QuanLyPhimController {
   @ApiQuery({ name: 'size', required: false, type: Number, default: 10 })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Get list film successfully',
+    description: 'Get list of films successfully',
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
@@ -137,7 +137,7 @@ export class QuanLyPhimController {
   })
   @ApiResponse({
     status: HttpStatus.INTERNAL_SERVER_ERROR,
-    description: 'Internal server',
+    description: 'Internal server error',
   })
   async findLayDanhSachPhimPhanTrang(
     @Query('tenPhim') tenPhim: string,
@@ -169,7 +169,7 @@ export class QuanLyPhimController {
 
       return res.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
-        message: 'Get list film successfully',
+        message: 'Get list of films successfully',
         content: {
           currentPage: formatPage,
           count: formatSize,
@@ -205,7 +205,7 @@ export class QuanLyPhimController {
   })
   @ApiResponse({
     status: HttpStatus.INTERNAL_SERVER_ERROR,
-    description: 'Internal server',
+    description: 'Internal server error',
   })
   async findLayDanhSachPhimTheoNgay(
     @Query('tenPhim') tenPhim: string,
@@ -238,7 +238,7 @@ export class QuanLyPhimController {
 
       return res.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
-        message: 'Get list film successfully',
+        message: 'Get list of films successfully',
         content: {
           currentPage: formatPage,
           count: formatSize,
@@ -262,7 +262,7 @@ export class QuanLyPhimController {
   @ApiQuery({ name: 'maPhim', required: true, type: String })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Get list film successfully',
+    description: 'Get list of films successfully',
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
@@ -270,7 +270,7 @@ export class QuanLyPhimController {
   })
   @ApiResponse({
     status: HttpStatus.INTERNAL_SERVER_ERROR,
-    description: 'Internal server',
+    description: 'Internal server error',
   })
   async findLayThongTinPhim(
     @Query('maPhim') maPhim: string,
@@ -290,7 +290,7 @@ export class QuanLyPhimController {
 
       return res.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
-        message: 'Get list film successfully',
+        message: 'Get list of films successfully',
         content: result,
         dateTime: new Date(Date.now()),
       });

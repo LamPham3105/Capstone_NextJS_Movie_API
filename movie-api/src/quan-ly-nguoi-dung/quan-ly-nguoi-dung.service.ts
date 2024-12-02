@@ -141,9 +141,11 @@ export class QuanLyNguoiDungService {
 
       const hashedPassword = await bcrypt.hash(registerData.matKhau, 10);
 
+      const countNguoiDung = await this.prisma.nguoiDung.count();
+
       const createdUser = await this.prisma.nguoiDung.create({
         data: {
-          tai_khoan: registerData.taiKhoan,
+          tai_khoan: 'ND' + (countNguoiDung + 1),
           ho_ten: registerData.hoTen,
           email: registerData.email,
           so_dt: registerData.soDienThoai,
@@ -339,10 +341,11 @@ export class QuanLyNguoiDungService {
         throw new BadRequestException('Tai khoan da ton tai');
       }
 
-      // Create the new user
+      const countNguoiDung = await this.prisma.nguoiDung.count();
+
       const user = await this.prisma.nguoiDung.create({
         data: {
-          tai_khoan: taiKhoan,
+          tai_khoan: 'ND' + (countNguoiDung + 1),
           mat_khau: matKhau,
           email: email,
           so_dt: soDt,

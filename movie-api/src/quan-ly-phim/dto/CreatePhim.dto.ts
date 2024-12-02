@@ -30,27 +30,22 @@ export class CreatePhimDto {
   moTa?: string;
 
   @ApiProperty()
-  @IsDateString()
   @IsNotEmpty()
   ngayKhoiChieu: string;
 
   @ApiProperty()
-  @IsInt()
   @IsOptional()
   danhGia?: number;
 
   @ApiProperty()
-  @IsBoolean()
   @IsOptional()
   hot?: boolean;
 
   @ApiProperty()
-  @IsBoolean()
   @IsOptional()
   dangChieu?: boolean;
 
   @ApiProperty()
-  @IsBoolean()
   @IsOptional()
   sapChieu?: boolean;
 }

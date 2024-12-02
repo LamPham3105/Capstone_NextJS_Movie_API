@@ -33,15 +33,15 @@ export class QuanLyDatVeController {
   @ApiQuery({ name: 'maLichChieu', required: true, type: String })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Get lich chieu successfully',
+    description: 'Successfully retrieved showtime details.',
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: 'Not found lich chieu',
+    description: 'Showtime not found.',
   })
   @ApiResponse({
     status: HttpStatus.INTERNAL_SERVER_ERROR,
-    description: 'Internal server',
+    description: 'Internal server error.',
   })
   async findLayDanhSachPhongVe(
     @Query('maLichChieu') maLichChieu: string,
@@ -54,7 +54,7 @@ export class QuanLyDatVeController {
       if (!result) {
         return res.status(HttpStatus.NOT_FOUND).json({
           statusCode: HttpStatus.NOT_FOUND,
-          message: 'Not found lich chieu',
+          message: 'Showtime not found',
           content: result,
           dateTime: new Date(Date.now()),
         });
@@ -62,7 +62,7 @@ export class QuanLyDatVeController {
 
       return res.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
-        message: 'Get lich chieu successfully',
+        message: 'Successfully retrieved showtime details',
         content: result,
         dateTime: new Date(Date.now()),
       });
@@ -141,16 +141,16 @@ export class QuanLyDatVeController {
   @Post('/TaoLichChieu')
   @UseGuards(AuthGuard('jwt'))
   @ApiBody({
-    description: 'Create a new Lich Chieu',
+    description: 'Create a new Showtime',
     type: LichChieuDto,
   })
   @ApiResponse({
     status: HttpStatus.CREATED,
-    description: 'Lich Chieu created successfully',
+    description: 'Showtime created successfully',
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
-    description: 'Invalid input or Lich Chieu already exists',
+    description: 'Invalid input or Showtime already exists',
   })
   @ApiResponse({
     status: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -166,7 +166,7 @@ export class QuanLyDatVeController {
 
       return res.status(HttpStatus.CREATED).json({
         statusCode: HttpStatus.CREATED,
-        message: 'Lich Chieu created successfully',
+        message: 'Showtime created successfully',
         content: lichChieu,
         dateTime: new Date(),
       });
